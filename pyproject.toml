@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[project]
+name = "asyncr"
+version = "0.0.1"
+authors = [
+  { name="Hadar Gotshal", email="gohadar@gmail.com" },
+]
+maintainers = [
+  { name="Hadar Gotshal", email="gohadar@gmail.com" },
+]
+description = "A python utility for running async functions."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.7"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "nest-asyncio",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/gohadar/asyncr"
