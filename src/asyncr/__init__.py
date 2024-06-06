@@ -1,4 +1,5 @@
 import asyncio
+import functools
 from functools import wraps
 
 import nest_asyncio
@@ -20,7 +21,7 @@ def __get_event_loop():
         raise
 
 
-def run_async(func):
+def as_sync(func):
     """
     Runs an async function from a synchronous context.
 
@@ -34,15 +35,30 @@ def run_async(func):
 
     @wraps(func)
     def inner(*args, **kwargs):
-        result = None
-
         async def wrapper():
-            nonlocal result
-            result = await func(*args, **kwargs)
+            return await func(*args, **kwargs)
 
         loop = __get_event_loop()
-        loop.run_until_complete(wrapper())
+        return loop.run_until_complete(wrapper())
 
-        return result
+    return inner
+
+
+def as_async(func):
+    """
+    Runs a synchronous function from an asynchronous context.
+
+    Args:
+        func: The function to run.
+
+    Returns:
+        An asynchronous function that will run the base `func` synchronously.
+    """
+    nest_asyncio.apply()
+
+    @wraps(func)
+    async def inner(*args, **kwargs):
+        loop = __get_event_loop()
+        return await loop.run_in_executor(None, functools.partial(func, *args, **kwargs))
 
     return inner
