@@ -45,6 +45,23 @@ def sync_function():
 print(get_event_loop().run_until_complete(sync_function()))
 ```
 
+You can also pass a the loop for running the functions as the parameter for the decorator. If no loop is provided, the
+default loop will be used.
+
+```python
+from asyncio import get_event_loop, new_event_loop
+
+from asyncr import as_sync, as_async
+
+
+# Create a new async function and wrap it with as_sync, now it will be a sync function.
+@as_sync(new_event_loop())
+async def async_function():
+    return "Hello, Sync World!"
+
+print(async_function())
+```
+
 ## Contributing
 
 Please open an issue first to discuss what you would like to change.
